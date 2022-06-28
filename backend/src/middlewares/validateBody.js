@@ -10,7 +10,9 @@ export default (validator) => async (req, res, next) => {
     });
 
   if (error) {
-    return res.status(400).json({ message: `Bad request!` });
+    return res.status(400).json({
+      message: `Bad request!`
+    });
   }
 
   await next();

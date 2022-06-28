@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import passport from 'passport';
 import jwtStrategy from './auth/strategy.js';
 import mongoose from 'mongoose';
+import usersRoute from './controllers/userController.js'
 
 const mongoString = process.env.DATABASE_URL;
 mongoose.connect(mongoString);
@@ -30,6 +31,7 @@ const PORT = +config.PORT;
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
+app.use('/', usersRoute)
 
 
 app.listen(process.env.PORT || PORT, () => console.log(`listening on port ${PORT}`));

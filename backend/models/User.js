@@ -5,10 +5,6 @@ const userSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: [true, 'No user id found']
     },
-    name: {
-        required: true,
-        type: String
-    },
     username: {
         required: true,
         type: String
@@ -17,12 +13,12 @@ const userSchema = new mongoose.Schema({
         required: true,
         type: String
     },
-    age: {
+    email: {
         required: true,
-        type: Number
+        type: String
     },
     role: {
-        required: true,
+        required: false,
         type: String,
         default: 'PLAYER'
     },
@@ -47,4 +43,6 @@ userSchema.path('imageURL').validate((val) => {
     return urlRegex.test(val);
 }, 'Invalid URL.');
 
-module.exports = mongoose.model('User', userSchema)
+let User = mongoose.model('User', userSchema)
+
+export default User;

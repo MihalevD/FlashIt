@@ -1,22 +1,29 @@
 import express from 'express';
-import User from '../../models/User';
+import User from '../../models/User.js';
 import mongoose from 'mongoose';
-import userRoleGuard from '../middlewares/userRoleGuards'
+import userRoleGuard from '../middlewares/userRoleGuards.js'
 import {
   authMiddleware
-} from '../auth/auth.middleware';
-import createUserValidator from '../validators/createUserValidator';
+} from '../auth/auth.middleware.js';
+import createUserValidator from '../validators/createUserValidator.js';
+import validateBody from '../middlewares/validateBody.js'
+import {
+  validateUser
+} from '../services/userServices.js';
+import bcrypt from 'bcryptjs'
+import createToken from '../auth/create-token.js'
 
-const router = express.Router()
+const usersRoute = express.Router()
 
 // CREATE USER
-router.post('/users', validateBody(createUserValidator), async (req, res) => {
+usersRoute.post('/register', validateBody(createUserValidator), async (req, res) => {
   var mongoObjectId = mongoose.Types.ObjectId();
+  const hashPassword = await bcrypt.hash(req.body.password, 10);
   const data = new User({
     _id: mongoObjectId,
     name: req.body.name,
-    age: req.body.age,
-    pass: req.body.pass,
+    email: req.body.email,
+    password: hashPassword,
     username: req.body.username
   })
 
@@ -31,7 +38,7 @@ router.post('/users', validateBody(createUserValidator), async (req, res) => {
 })
 
 //Get all USERS Method
-router.get('/users', async (req, res) => {
+usersRoute.get('/users', async (req, res) => {
   try {
     const data = await User.find();
     if (data.length === 0) {
@@ -49,7 +56,7 @@ router.get('/users', async (req, res) => {
 })
 
 //Get USER by ID Method
-router.get('/users/:userId', userRoleGuard, async (req, res) => {
+usersRoute.get('/users/:userId', userRoleGuard, async (req, res) => {
   try {
     const data = await User.findById(req.params.userId);
     res.json(data)
@@ -61,7 +68,7 @@ router.get('/users/:userId', userRoleGuard, async (req, res) => {
 })
 
 //Update USER by ID Method
-router.put('/users/:userId', authMiddleware, async (req, res) => {
+usersRoute.put('/users/:userId', authMiddleware, async (req, res) => {
   try {
     const id = req.params.userId;
     const updatedData = req.body;
@@ -82,7 +89,7 @@ router.put('/users/:userId', authMiddleware, async (req, res) => {
 })
 
 //Delete USER by ID Method
-router.delete('/users/:userId', async (req, res) => {
+usersRoute.delete('/users/:userId', async (req, res) => {
   try {
     const id = req.params.userId;
     const data = await User.findByIdAndDelete(id)
@@ -98,8 +105,7 @@ router.delete('/users/:userId', async (req, res) => {
 // LOGIN
 usersRoute.post('/login', async (req, res) => {
   try {
-    const user = await validateUser(usersData)(req.body);
-
+    const user = await validateUser(req.body);
     if (user) {
       const token = createToken({
         id: user.id,
@@ -132,4 +138,4 @@ usersRoute.delete('/logout', async (req, res) => {
   });
 });
 
-module.exports = router;
+export default usersRoute;

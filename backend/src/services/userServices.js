@@ -1,18 +1,22 @@
-import User from '../../models/User'
+import User from '../../models/User.js'
+import bcrypt from 'bcryptjs'
 
-export const validateUser = (usersData) => async ({
-    email,
+export const validateUser = async ({
+    username,
     password
 }) => {
-    const user = await User.exists({
-        email: email
+    const user = await User.findOne({
+        username: username
     });
 
+    console.log(user)
+
     if (!user) {
-        throw new Error('Email does not exist!');
+        throw new Error('Username does not exist!');
     }
 
     if (await bcrypt.compare(password, user.password)) {
+        console.log('yey')
         return user;
     }
 
