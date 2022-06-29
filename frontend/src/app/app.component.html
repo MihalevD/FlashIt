@@ -1,3 +1,12 @@
-<main-navbar></main-navbar>
-<router-outlet></router-outlet>
-<app-footer></app-footer>
+<div class="w-full h-full">
+  <main-navbar *ngIf="!isLanding"></main-navbar>
+  <router-outlet></router-outlet>
+  <app-footer *ngIf="!isLanding"></app-footer>
+  <div class="html">
+    <div class="body">
+      <div class="wrap">
+        <div class="top-plane"></div>
+      </div>
+    </div>
+  </div>
+</div>

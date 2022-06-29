@@ -2,3 +2,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html,
+body {
+  height: 100vh;
+  /* background-image: url(./assets/bk.jpg); */
+  object-fit: contain;
+}
+
+* {
+  font-family: 'Rubik Moonrocks', sans-serif;
+}
+
+input {
+  font-family: sans-serif;
+}

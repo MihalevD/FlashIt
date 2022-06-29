@@ -12,6 +12,7 @@ import { LoginModule } from './login/login.module';
 import { FooterModule } from './footer/footer.module';
 import { SvgIconModule } from './svg-icon/svg-icon.module';
 import { HttpClientModule } from '@angular/common/http';
+import { LandingComponent } from './landing/landing.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { HttpClientModule } from '@angular/common/http';
     AboutPageComponent,
     HomePageComponent,
     GamesTabComponent,
+    LandingComponent,
   ],
   imports: [
     BrowserModule,
