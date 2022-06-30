@@ -1,0 +1,17 @@
+.reviews {
+  max-height: 500px;
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  font-family: sans-serif !important;
+  /* Firefox */
+}
+
+.text {
+  font-family: sans-serif !important;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.reviews::-webkit-scrollbar {
+  display: none;
+}

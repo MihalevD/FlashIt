@@ -52,3 +52,9 @@
     perspective: 360px - 150;
   }
 }
+
+
+.router {
+  height: calc(100% - 226px);
+  width: 100%;
+}

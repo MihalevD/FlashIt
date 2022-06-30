@@ -1,3 +1,4 @@
+import { PlayComponent } from './play/play.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AboutPageComponent } from './about-page/about-page.component';
@@ -10,6 +11,7 @@ import { RegistrationComponent } from './registration/registration/registration.
 const routes: Routes = [
   { path: '', component: LandingComponent },
   { path: 'home', component: HomePageComponent },
+  { path: 'play/:gameName', component: PlayComponent },
   { path: 'games', component: GamesTabComponent },
   { path: 'about', component: AboutPageComponent },
   { path: 'login', component: LogInComponent },

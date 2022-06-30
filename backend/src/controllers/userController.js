@@ -28,8 +28,18 @@ usersRoute.post('/register', validateBody(createUserValidator), async (req, res)
   })
 
   try {
-    const dataToSave = await data.save();
-    res.status(200).json(dataToSave)
+    await data.save();
+    const token = createToken({
+      id: user.id,
+      username: user.username,
+      name: user.name,
+      createdAt: user.createdAt,
+      email: user.email,
+      role: user.role,
+    });
+    res.status(200).json({
+      token
+    });
   } catch (error) {
     res.status(400).json({
       message: error.message
@@ -131,8 +141,9 @@ usersRoute.post('/login', async (req, res) => {
 });
 //LOGOUT
 usersRoute.delete('/logout', async (req, res) => {
+  console.log(req.headers.authorization)
   const token = req.headers.authorization.replace('Bearer ', '');
-  await blacklistToken(tokenData)(token);
+  console.log('USER LOGGED OUT')
   res.status(200).json({
     message: 'You have been logged out!'
   });

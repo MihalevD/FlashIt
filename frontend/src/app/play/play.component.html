@@ -1,0 +1,40 @@
+<div class="flex items-start justify-evenly">
+  <iframe
+    [src]="gameURL | safe"
+    width="960"
+    height="700"
+    frameborder="0"
+    webkitallowfullscreen
+    mozallowfullscreen
+    allowfullscreen
+  >
+  </iframe>
+  <div>
+    <p class="text-4xl text-center text-white">OUR REVIEWS :</p>
+    <div class="w-full flex justify-center my-3">
+      <app-svg-icon
+        [icon]="'arrow'"
+        class="transform -rotate-45"
+      ></app-svg-icon>
+    </div>
+    <div class="reviews overflow-y-scroll">
+      <div
+        *ngFor="let item of array; let i = index"
+        class="bg-white w-80 h-40 rounded-lg overflow-hidden my-3 p-4"
+      >
+        <div class="flex w-full justify-between">
+          <p class="text">name : pan</p>
+          <p class="text">4/5</p>
+        </div>
+        <p class="text">
+          description : Lorem ipsum, dolor sit amet consectetur adipisicing
+          elit. Ratione, ex facere placeat officiis veniam corporis laboriosam
+          molestiae. Pariatur doloremque vero
+        </p>
+      </div>
+    </div>
+    <div class="w-full flex justify-center mt-4">
+      <app-svg-icon [icon]="'arrow'" class="transform rotate-45"></app-svg-icon>
+    </div>
+  </div>
+</div>

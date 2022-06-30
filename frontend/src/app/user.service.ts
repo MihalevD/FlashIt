@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from './../environments/environment';
+import decode from 'jwt-decode';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -26,17 +27,16 @@ export class UserService {
       .post(environment.apiURL + '/login', { username, password }, httpOptions)
       .toPromise()
       .then((res: any) => {
-        console.log(res);
         if (res && res.token) {
-          sessionStorage.setItem('token', res.token);
+          localStorage.setItem('token', res.token);
           this.errorSubject.next(null);
-          if (res.data) {
-            this.userSubject.next(res.data);
-          }
-          this.router.navigateByUrl('dashboard');
-        } else if (res.Message) {
-          this.errorSubject.next(res.Message);
+          this.userSubject.next(this.decodeToken(res.token));
+          this.router.navigateByUrl('home');
         }
+      })
+      .catch((err) => {
+        console.log(err);
+        this.errorSubject.next(err.error.error);
       });
   }
 
@@ -45,24 +45,48 @@ export class UserService {
       .post(`${environment.apiURL}/register`, { username, email, password })
       .toPromise()
       .then((res: any) => {
-        if (res && res.jwt) {
-          sessionStorage.setItem('jwt', res.jwt);
+        if (res && res.token) {
+          localStorage.setItem('token', res.token);
           this.errorSubject.next(null);
-          if (res.data) {
-            this.userSubject.next(res.data);
+          if (res.token) {
+            this.userSubject.next(this.decodeToken(res.token));
           }
-          this.router.navigateByUrl('dashboard');
-        } else if (res.Message) {
-          this.errorSubject.next(res.Message);
+          this.router.navigateByUrl('home');
         }
+      })
+      .catch((err) => {
+        console.log(err);
+        this.errorSubject.next(err.error.error);
+      });
+  }
+
+  signOut() {
+    this.http
+      .delete(`${environment.apiURL}/logout`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+      })
+      .toPromise()
+      .then((res: any) => {
+        localStorage.removeItem('token');
+        this.userSubject.next(null);
       });
   }
 
   isAuthenticated(): boolean {
-    if (sessionStorage.getItem('jwt')) {
+    let token = localStorage.getItem('token');
+    if (token) {
+      this.userSubject.next(this.decodeToken(token));
       return true;
     } else {
       return false;
     }
   }
+
+  decodeToken = (token: any) => {
+    try {
+      const user = decode(token);
+      return user;
+    } catch {}
+    return null;
+  };
 }

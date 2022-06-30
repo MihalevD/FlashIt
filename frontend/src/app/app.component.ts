@@ -1,6 +1,8 @@
+import { UserService } from 'src/app/user.service';
 import { Component } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import 'tw-elements';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +13,7 @@ export class AppComponent {
   title = 'FlashIt';
 
   isLanding = true;
-  constructor(private router: Router) {
+  constructor(private router: Router, private userService: UserService) {
     this.router.events.subscribe((event: any) => {
       if (event.url) {
         this.isLanding = event.url === '/';
@@ -19,5 +21,7 @@ export class AppComponent {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.userService.isAuthenticated();
+  }
 }

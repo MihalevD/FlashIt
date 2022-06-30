@@ -2,11 +2,25 @@
   id="login-container"
   class="flex container mx-auto items-center justify-center"
 >
-  <div class="w-full max-w-xs">
-    <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-      <div class="mb-4">
+  <div class="w-full max-w-md">
+    <form class="bg-white shadow-md rounded p-14 mb-4 relative">
+      <div *ngIf="error" class="my-8">
+        <div
+          class="absolute left-1/2 transform -translate-x-1/2 w-max top-8 p-2 bg-red-600 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex"
+          role="alert"
+        >
+          <span
+            class="flex rounded-full bg-red-400 uppercase px-2 py-1 text-xs mr-3"
+            >ERROR</span
+          >
+          <span class="font-semibold mr-2 text-left flex-auto">{{
+            error
+          }}</span>
+        </div>
+      </div>
+      <div class="mb-8">
         <label
-          class="block text-gray-700 text-sm font-bold mb-2"
+          class="block text-gray-700 font-bold text-sm mb-2"
           for="username"
         >
           Username
@@ -14,6 +28,7 @@
         <input
           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="username"
+          [ngClass]="{ 'border border-red-600': error }"
           type="text"
           placeholder="Username"
           (keyup)="onKey($event, 'username')"
@@ -22,9 +37,9 @@
           Username can consist of letters and numbers only!
         </p>
       </div>
-      <div class="mb-6">
+      <div class="mb-8">
         <label
-          class="block text-gray-700 text-sm font-bold mb-2"
+          class="block text-gray-700 font-bold text-sm mb-2"
           for="password"
         >
           Password
@@ -32,6 +47,7 @@
         <input
           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
           id="password"
+          [ngClass]="{ 'border border-red-600': error }"
           type="password"
           placeholder="*********"
           (keyup)="onKey($event, 'password')"
@@ -39,14 +55,14 @@
       </div>
       <div class="flex items-center justify-between">
         <button
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-5 rounded focus:outline-none focus:shadow-outline"
           type="button"
           (click)="onSubmit()"
         >
           Sign In
         </button>
         <a
-          class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+          class="inline-block align-baseline text-sm font-bold text-blue-500 hover:text-blue-800"
           href="#"
         >
           Forgot Password?
@@ -54,22 +70,7 @@
       </div>
     </form>
     <p class="text-center text-white text-xs">
-      &copy;2020 Banking App by Duomly. All rights reserved.
+      &copy;2022 IO Games APP by Denis. All rights reserved.
     </p>
-  </div>
-  <div
-    *ngIf="error"
-    class="notification bg-indigo-900 text-center py-4 lg:px-4"
-  >
-    <div
-      class="p-2 bg-indigo-800 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex"
-      role="alert"
-    >
-      <span
-        class="flex rounded-full bg-indigo-500 uppercase px-2 py-1 text-xs font-bold mr-3"
-        >ERROR</span
-      >
-      <span class="font-semibold mr-2 text-left flex-auto">{{ error }}</span>
-    </div>
   </div>
 </div>

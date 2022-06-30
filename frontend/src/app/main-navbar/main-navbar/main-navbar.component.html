@@ -27,7 +27,7 @@
   <div
     class="menu w-full flex-grow lg:flex lg:items-center lg:w-auto lg:px-3 px-8"
   >
-    <div class="text-md text-white lg:flex-grow">
+    <div class="text-2xl text-white lg:flex-grow">
       <a
         class="block mt-4 lg:inline-block lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-blue-700 mr-2"
         routerLink="/home"
@@ -47,7 +47,7 @@
         ABOUT
       </a>
     </div>
-    <div class="relative mx-auto text-gray-600 lg:block hidden">
+    <!-- <div class="relative mx-auto text-gray-600 lg:block hidden">
       <input
         class="border-2 border-gray-300 bg-white h-10 pl-2 pr-8 rounded-lg text-sm focus:outline-none"
         type="search"
@@ -73,18 +73,25 @@
           />
         </svg>
       </button>
-    </div>
-    <div class="flex">
+    </div> -->
+    <div class="flex" *ngIf="!isLogged">
       <a
         routerLink="/signup"
-        class="block text-md px-4 py-2 rounded text-white ml-2 hover:text-white mt-4 hover:bg-blue-700 lg:mt-0"
-        >Sign Up</a
+        class="block text-2xl px-4 py-2 rounded text-white ml-2 hover:text-white mt-4 hover:bg-blue-700 lg:mt-0"
+        >SIGN UP</a
       >
 
       <a
         routerLink="/login"
-        class="block text-md px-4 ml-2 py-2 rounded text-white hover:text-white mt-4 hover:bg-blue-700 lg:mt-0"
-        >Log In</a
+        class="block text-2xl px-4 ml-2 py-2 rounded text-white hover:text-white mt-4 hover:bg-blue-700 lg:mt-0"
+        >LOG IN</a
+      >
+    </div>
+    <div class="flex" *ngIf="isLogged">
+      <a
+        (click)="signOut()"
+        class="block text-2xl px-4 py-2 rounded text-white ml-2 hover:text-white mt-4 hover:bg-blue-700 lg:mt-0"
+        >SIGN OUT</a
       >
     </div>
   </div>

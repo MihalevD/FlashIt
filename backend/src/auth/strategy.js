@@ -1,7 +1,9 @@
 import passportJwt from 'passport-jwt';
 import dotenv from 'dotenv';
 
-const { SECRET_KEY } = dotenv.config().parsed;
+const {
+  SECRET_KEY
+} = dotenv.config().parsed;
 
 const options = {
   secretOrKey: SECRET_KEY,
@@ -11,9 +13,9 @@ const options = {
 const jwtStrategy = new passportJwt.Strategy(options, async (payload, done) => {
   const user = {
     id: payload.id,
-    firstName: payload.firstName,
-    lastName: payload.lastName,
+    username: payload.username,
     email: payload.email,
+    role: payload.role
   };
 
   done(null, user); // req.user = user;

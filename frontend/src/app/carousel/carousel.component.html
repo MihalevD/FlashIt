@@ -1,0 +1,31 @@
+<div class="flex items-center w-full justify-center">
+  <div (click)="previous()">
+    <app-svg-icon
+      [icon]="'arrow'"
+      class="transform rotate-180 cursor-pointer"
+    ></app-svg-icon>
+  </div>
+  <div class="flex flex-col">
+    <div *ngFor="let item of items; let indexOfelement = index" class="mx-8">
+      <div
+        *ngIf="indexOfelement === selected"
+        class="cursor-pointer relative"
+        (mouseenter)="mouseEnter()"
+        (mouseleave)="mouseLeave()"
+      >
+        <img [src]="item.imageURL" />
+        <div *ngIf="hovered" class="image absolute top-0 left-0"></div>
+        <button
+          *ngIf="hovered"
+          [routerLink]="['/play', item.redirect]"
+          class="p-4 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-yellow-300 rounded-xl"
+        >
+          PLAY
+        </button>
+      </div>
+    </div>
+  </div>
+  <div (click)="next()">
+    <app-svg-icon [icon]="'arrow'" class="cursor-pointer"></app-svg-icon>
+  </div>
+</div>

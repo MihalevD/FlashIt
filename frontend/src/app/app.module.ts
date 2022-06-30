@@ -13,6 +13,9 @@ import { FooterModule } from './footer/footer.module';
 import { SvgIconModule } from './svg-icon/svg-icon.module';
 import { HttpClientModule } from '@angular/common/http';
 import { LandingComponent } from './landing/landing.component';
+import { CarouselComponent } from './carousel/carousel.component';
+import { SafePipe } from './play/safe.pipe';
+import { PlayModule } from './play/play.module';
 
 @NgModule({
   declarations: [
@@ -21,6 +24,7 @@ import { LandingComponent } from './landing/landing.component';
     HomePageComponent,
     GamesTabComponent,
     LandingComponent,
+    CarouselComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,6 +35,7 @@ import { LandingComponent } from './landing/landing.component';
     FooterModule,
     SvgIconModule,
     HttpClientModule,
+    PlayModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

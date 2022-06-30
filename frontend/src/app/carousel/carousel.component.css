@@ -1,0 +1,9 @@
+img,
+.image {
+  width: 490px;
+  height: 250px;
+}
+
+.image {
+  background: rgba(0, 0, 0, 0.3);
+}
