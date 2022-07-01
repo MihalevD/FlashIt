@@ -6,6 +6,7 @@ import passport from 'passport';
 import jwtStrategy from './auth/strategy.js';
 import mongoose from 'mongoose';
 import usersRoute from './controllers/userController.js'
+import reviewsRoute from './controllers/reviewController.js';
 
 const mongoString = process.env.DATABASE_URL;
 mongoose.connect(mongoString);
@@ -32,6 +33,7 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 app.use('/', usersRoute)
+app.use('/games/:gameId/reviews', reviewsRoute)
 
 
 app.listen(process.env.PORT || PORT, () => console.log(`listening on port ${PORT}`));
