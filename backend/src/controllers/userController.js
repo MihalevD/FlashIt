@@ -86,11 +86,30 @@ usersRoute.put('/users/:userId', authMiddleware, async (req, res) => {
       new: true
     };
 
-    const result = await User.findByIdAndUpdate(
+    console.log(id)
+
+    const user = await User.findByIdAndUpdate(
       id, updatedData, options
     )
 
-    res.send(result)
+    if (user) {
+      const token = createToken({
+        id: user.id,
+        username: user.username,
+        name: user.name,
+        createdAt: user.createdAt,
+        email: user.email,
+        role: user.role,
+        applied: user.applied
+      });
+      res.status(200).json({
+        token
+      });
+    } else {
+      res.status(401).json({
+        error: 'Something went wrong!'
+      });
+    }
   } catch (error) {
     res.status(400).json({
       message: error.message
@@ -124,6 +143,7 @@ usersRoute.post('/login', async (req, res) => {
         createdAt: user.createdAt,
         email: user.email,
         role: user.role,
+        applied: user.applied
       });
       res.status(200).json({
         token

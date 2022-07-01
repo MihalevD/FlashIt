@@ -17,22 +17,30 @@ export class GamesServices {
   gamesSubject: any = new BehaviorSubject<any>(null);
   games: any = this.gamesSubject.asObservable();
 
+  userObject: any;
+
   constructor(
     private http: HttpClient,
     private router: Router,
     private userService: UserService
-  ) {}
+  ) {
+    this.userService.user.subscribe((user: any) => {
+      this.userObject = user;
+    });
+  }
 
   addGame(name: string, imageURL: string): any {
+    console.log(this.userObject);
     if (
-      this.userService.user.role !== 'Admin' ||
-      this.userService.user.role !== 'Creator'
+      this.userObject.role !== 'ADMIN' &&
+      this.userObject.role !== 'CREATOR'
     ) {
       this.errorSubject.next(
-        'You are not an Admin/Creator. You can not delete/update games!'
+        'You are not an ADMIN/CREATOR. You can not delete/update games!'
       );
       return;
     }
+    console.log('else');
     this.http
       .post(
         `${environment.apiURL}/games`,
@@ -68,9 +76,9 @@ export class GamesServices {
   }
 
   updateGame(body: any, gameId: any): any {
-    if (this.userService.user.role !== 'Admin') {
+    if (this.userObject.role !== 'ADMIN') {
       this.errorSubject.next(
-        'You are not an Admin. You can not delete/update games!'
+        'You are not an ADMIN. You can not delete/update games!'
       );
       return;
     }
@@ -91,9 +99,9 @@ export class GamesServices {
   }
 
   deleteGame(gameId: any): any {
-    if (this.userService.user.role !== 'Admin') {
+    if (this.userObject.role !== 'ADMIN') {
       this.errorSubject.next(
-        'You are not an Admin. You can not delete/update games!'
+        'You are not an ADMIN. You can not delete/update games!'
       );
       return;
     }

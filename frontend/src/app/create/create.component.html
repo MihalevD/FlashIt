@@ -1,1 +1,104 @@
-<p>create works!</p>
+<div *ngIf="user" class="w-full h-full">
+  <div
+    *ngIf="user.role === 'CREATOR' || user.role === 'ADMIN'"
+    class="w-full h-full"
+  >
+    <div class="w-full h-full flex items-center justify-center flex-col -mt-10">
+      <p class="text-6xl mx-auto text-white text-center w-1/2 -mt-10 mb-10">
+        ADD GAME
+      </p>
+      <form class="bg-white shadow-md rounded p-14 mb-4 relative">
+        <div *ngIf="error" class="my-8">
+          <div
+            class="absolute left-1/2 transform -translate-x-1/2 w-max top-8 p-2 bg-red-600 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex"
+            role="alert"
+          >
+            <span
+              class="flex rounded-full bg-red-400 uppercase px-2 py-1 text-xs mr-3"
+              >ERROR</span
+            >
+            <span class="font-semibold mr-2 text-left flex-auto">{{
+              error
+            }}</span>
+          </div>
+        </div>
+        <div class="mb-8">
+          <label class="block text-gray-700 font-bold text-sm mb-2" for="name">
+            Name
+          </label>
+          <input
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="name"
+            [ngClass]="{ 'border border-red-600': error }"
+            type="text"
+            placeholder="Name"
+            (keyup)="onKey($event, 'name')"
+          />
+          <p *ngIf="!isNameValid" class="text-red-500 text-xs italic">
+            Name Should end in IO!
+          </p>
+        </div>
+        <div>
+          <div class="mb-8">
+            <label
+              class="block text-gray-700 font-bold text-sm mb-2"
+              for="imageURL"
+            >
+              Image URL
+            </label>
+            <input
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+              id="imageURL"
+              [ngClass]="{ 'border border-red-600': error }"
+              type="imageURL"
+              (keyup)="onKey($event, 'imageURL')"
+            />
+          </div>
+          <img
+            *ngIf="imageURL"
+            [src]="imageURL"
+            alt="image URL"
+            class="w-34 h-20 -mt-8 mb-4"
+          />
+        </div>
+        <div class="flex items-center justify-between">
+          <button
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-5 rounded focus:outline-none focus:shadow-outline"
+            type="button"
+            (click)="onSubmit()"
+          >
+            Upload Game
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div
+    class="w-full h-full flex items-center justify-evenly flex-col"
+    *ngIf="user.role === 'PLAYER'"
+  >
+    <p
+      *ngIf="user.applied === true"
+      class="text-6xl mx-auto text-white text-center w-1/2"
+    >
+      WE ARE REVIEWING YOUR APPLICATION!
+    </p>
+    <p
+      *ngIf="user.applied !== true"
+      class="text-6xl mx-auto text-white text-center w-1/2"
+    >
+      IF YOU ARE INTERESTED IN BECOMING A CREATOR CLICK ON THE BUTTON BELLOW
+    </p>
+    <button
+      *ngIf="user.applied !== true"
+      (click)="apply()"
+      class="w-64 h-28 bg-yellow-400 text-white rounded-2xl text-4xl"
+    >
+      APPLY!
+    </button>
+  </div>
+</div>
+
+<div *ngIf="!user">
+  <p>LOG IN TO SEE THIS OPTION!</p>
+</div>

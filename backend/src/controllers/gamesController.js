@@ -1,5 +1,6 @@
 import express from 'express';
 import Game from '../../models/Game.js';
+import mongoose from 'mongoose';
 import createGameValidator from '../validators/createGameValidator.js';
 import validateBody from '../middlewares/validateBody.js'
 

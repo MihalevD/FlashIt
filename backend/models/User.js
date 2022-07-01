@@ -30,6 +30,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: false
     },
+    applied: {
+        type: Boolean,
+        required: false
+    }
 }, {
     timestamps: {
         createdAt: 'created_at',

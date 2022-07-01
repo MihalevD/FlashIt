@@ -17,18 +17,24 @@ export class ReviewsService {
   reviewsSubject: any = new BehaviorSubject<any>(null);
   reviews: any = this.reviewsSubject.asObservable();
 
+  userObject: any;
+
   constructor(
     private http: HttpClient,
     private router: Router,
     private userService: UserService
-  ) {}
+  ) {
+    this.userService.user.subscribe((user: any) => {
+      this.userObject = user;
+    });
+  }
 
   addReview(gameId: any, rating: string, description: string): any {
     this.http
       .post(`${environment.apiURL}/games/${gameId}/reviews`, {
         rating,
         description,
-        user_id: this.userService.user.id,
+        user_id: this.userObject.id,
       })
       .toPromise()
       .then((res: any) => {
@@ -36,7 +42,7 @@ export class ReviewsService {
         this.reviews.push({
           rating,
           description,
-          user_id: this.userService.user.id,
+          user_id: this.userObject.id,
         });
       })
       .catch((err) => {

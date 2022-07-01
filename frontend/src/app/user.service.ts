@@ -20,7 +20,13 @@ export class UserService {
   userSubject: any = new BehaviorSubject<any>(null);
   user: any = this.userSubject.asObservable();
 
-  constructor(private http: HttpClient, private router: Router) {}
+  userForService: any;
+
+  constructor(private http: HttpClient, private router: Router) {
+    this.user.subscribe((user: any) => {
+      this.userForService = user;
+    });
+  }
 
   login(username: string, password: string): any {
     this.http
@@ -48,9 +54,27 @@ export class UserService {
         if (res && res.token) {
           localStorage.setItem('token', res.token);
           this.errorSubject.next(null);
-          if (res.token) {
-            this.userSubject.next(this.decodeToken(res.token));
-          }
+          this.userSubject.next(this.decodeToken(res.token));
+          this.router.navigateByUrl('home');
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        this.errorSubject.next(err.error.error);
+      });
+  }
+
+  updateUser(body: any): any {
+    this.http
+      .put(`${environment.apiURL}/users/${this.userForService.id}`, body, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+      })
+      .toPromise()
+      .then((res: any) => {
+        if (res && res.token) {
+          localStorage.setItem('token', res.token);
+          this.errorSubject.next(null);
+          this.userSubject.next(this.decodeToken(res.token));
           this.router.navigateByUrl('home');
         }
       })
