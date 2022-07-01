@@ -1,9 +1,14 @@
 import express from 'express';
 import Game from '../../models/Game.js';
+import createGameValidator from '../validators/createGameValidator.js';
+import validateBody from '../middlewares/validateBody.js'
+
+
+
 const gamesRoute = express.Router()
 
 
-gamesRoute.post('/', async (req, res) => {
+gamesRoute.post('/', validateBody(createGameValidator), async (req, res) => {
     const {
         name,
         imageURL
@@ -62,7 +67,7 @@ gamesRoute.get('/:gameId', async (req, res) => {
         })
     }
 })
-gamesRoute.put('/:gameId', async (req, res) => {
+gamesRoute.put('/:gameId', validateBody(createGameValidator), async (req, res) => {
     try {
         const {
             name,

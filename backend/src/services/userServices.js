@@ -9,14 +9,11 @@ export const validateUser = async ({
         username: username
     });
 
-    console.log(user)
-
     if (!user) {
         throw new Error('Username does not exist!');
     }
 
     if (await bcrypt.compare(password, user.password)) {
-        console.log('yey')
         return user;
     }
 

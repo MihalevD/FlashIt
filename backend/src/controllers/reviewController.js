@@ -1,12 +1,14 @@
 import express from 'express';
 import Review from '../../models/Review.js';
 import mongoose from 'mongoose';
+import createReviewValidator from '../validators/createReviewValidator.js';
+import validateBody from '../middlewares/validateBody.js'
 
 
 const reviewsRoute = express.Router()
 
 
-reviewsRoute.post('/', async (req, res) => {
+reviewsRoute.post('/', validateBody(createReviewValidator), async (req, res) => {
     const {
         user_id,
         rating,
@@ -55,7 +57,7 @@ reviewsRoute.get('/', async (req, res) => {
         })
     }
 })
-reviewsRoute.put('/:reviewId', async (req, res) => {
+reviewsRoute.put('/:reviewId', validateBody(createReviewValidator), async (req, res) => {
     try {
         const {
             rating,
