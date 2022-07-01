@@ -84,8 +84,10 @@ gamesRoute.put('/:gameId', validateBody(createGameValidator), async (req, res) =
             new: true
         };
 
-        let newGame = await Game.findOneAndUpdate(filter, update, options);
-        res.send(newGame)
+        await Game.findOneAndUpdate(filter, update, options);
+        res.status(200).json({
+            message: 'Successfully updated'
+        })
     } catch (error) {
         res.status(400).json({
             message: error.message

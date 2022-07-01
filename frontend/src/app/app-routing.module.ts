@@ -7,10 +7,12 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { LandingComponent } from './landing/landing.component';
 import { LogInComponent } from './login/log-in/log-in.component';
 import { RegistrationComponent } from './registration/registration/registration.component';
+import { CreateComponent } from './create/create.component';
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
   { path: 'home', component: HomePageComponent },
+  { path: 'create', component: CreateComponent },
   { path: 'play/:gameName', component: PlayComponent },
   { path: 'games', component: GamesTabComponent },
   { path: 'about', component: AboutPageComponent },

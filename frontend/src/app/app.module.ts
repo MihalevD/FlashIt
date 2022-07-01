@@ -16,6 +16,7 @@ import { LandingComponent } from './landing/landing.component';
 import { CarouselComponent } from './carousel/carousel.component';
 import { SafePipe } from './play/safe.pipe';
 import { PlayModule } from './play/play.module';
+import { CreateComponent } from './create/create.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { PlayModule } from './play/play.module';
     GamesTabComponent,
     LandingComponent,
     CarouselComponent,
+    CreateComponent,
   ],
   imports: [
     BrowserModule,

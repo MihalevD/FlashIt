@@ -5,7 +5,9 @@
     class="flex justify-between lg:w-auto w-full lg:border-b-0 pl-6 pr-2 border-solid border-b-2 border-gray-300 pb-5 lg:pb-0"
   >
     <div class="flex items-center flex-shrink-0 text-gray-800 mr-16">
-      <span class="text-xl tracking-tight text-yellow-300">FlashIT</span>
+      <span class="text-xl tracking-tight text-yellow-300 cursor-pointer" routerLink="/home"
+        >FlashIT</span
+      >
     </div>
     <div class="block lg:hidden">
       <button
@@ -30,13 +32,13 @@
     <div class="text-2xl text-white lg:flex-grow">
       <a
         class="block mt-4 lg:inline-block lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-blue-700 mr-2"
-        routerLink="/home"
+        routerLink="/games"
       >
         GAMES
       </a>
       <a
         class="block mt-4 lg:inline-block lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-blue-700 mr-2"
-        routerLink="/games"
+        routerLink="/create"
       >
         CREATE
       </a>
