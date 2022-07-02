@@ -1,3 +1,4 @@
+import { ReviewsService } from './../reviews.service';
 import { UserService } from 'src/app/user.service';
 import { GamesServices } from './../games.service';
 import { Component, OnInit } from '@angular/core';
@@ -15,7 +16,8 @@ export class GamesTabComponent implements OnInit {
   user: any;
   constructor(
     private gamesServices: GamesServices,
-    private userService: UserService
+    private userService: UserService,
+    private reviewsService: ReviewsService
   ) {
     this.userService.user.subscribe((user: any) => {
       this.user = user;
@@ -40,5 +42,9 @@ export class GamesTabComponent implements OnInit {
 
   mouseLeave(indexOfelement: number) {
     this.hovered = -1;
+  }
+
+  getReviews(gameId: any) {
+    this.reviewsService.getReviews(gameId);
   }
 }

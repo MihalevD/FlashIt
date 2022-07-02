@@ -35,7 +35,7 @@ app.use(cors());
 app.use(express.json());
 app.use('/', usersRoute)
 app.use('/games', gamesRoute)
-app.use('/games/:gameId/reviews', reviewsRoute)
+app.use('/reviews', reviewsRoute)
 
 
 app.listen(process.env.PORT || PORT, () => console.log(`listening on port ${PORT}`));

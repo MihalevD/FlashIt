@@ -6,5 +6,5 @@ export default {
         value.length <= constraints.maxFormEntry,
     rating: (value) => typeof value === 'number' &&
         value >= constraints.minRating &&
-        value.length <= constraints.maxRating,
+        value <= constraints.maxRating,
 };

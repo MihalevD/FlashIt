@@ -42,10 +42,10 @@ const userSchema = new mongoose.Schema({
 })
 
 
-userSchema.path('imageURL').validate((val) => {
-    urlRegex = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-/]))?/;
-    return urlRegex.test(val);
-}, 'Invalid URL.');
+// userSchema.path('imageURL').validate((val) => {
+//     urlRegex = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-/]))?/;
+//     return urlRegex.test(val);
+// }, 'Invalid URL.');
 
 let User = mongoose.model('User', userSchema)
 

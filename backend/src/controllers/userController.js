@@ -19,9 +19,9 @@ const usersRoute = express.Router()
 usersRoute.post('/register', validateBody(createUserValidator), async (req, res) => {
   var mongoObjectId = mongoose.Types.ObjectId();
   const hashPassword = await bcrypt.hash(req.body.password, 10);
+  console.log(hashPassword)
   const data = new User({
     _id: mongoObjectId,
-    name: req.body.name,
     email: req.body.email,
     password: hashPassword,
     username: req.body.username
@@ -29,13 +29,16 @@ usersRoute.post('/register', validateBody(createUserValidator), async (req, res)
 
   try {
     await data.save();
+
+    let user = User.findById(data.id)
     const token = createToken({
       id: user.id,
       username: user.username,
-      name: user.name,
       createdAt: user.createdAt,
       email: user.email,
       role: user.role,
+      applied: user.applied,
+      imageURL: user.imageURl
     });
     res.status(200).json({
       token

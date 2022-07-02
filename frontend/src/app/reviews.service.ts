@@ -17,6 +17,8 @@ export class ReviewsService {
   reviewsSubject: any = new BehaviorSubject<any>(null);
   reviews: any = this.reviewsSubject.asObservable();
 
+  gameId: any;
+
   userObject: any;
 
   constructor(
@@ -29,9 +31,9 @@ export class ReviewsService {
     });
   }
 
-  addReview(gameId: any, rating: string, description: string): any {
+  addReview(gameId: any, rating: number, description: string): any {
     this.http
-      .post(`${environment.apiURL}/games/${gameId}/reviews`, {
+      .post(`${environment.apiURL}/reviews/${gameId}`, {
         rating,
         description,
         user_id: this.userObject.id,
@@ -39,11 +41,7 @@ export class ReviewsService {
       .toPromise()
       .then((res: any) => {
         this.successSubject.next(res.message);
-        this.reviews.push({
-          rating,
-          description,
-          user_id: this.userObject.id,
-        });
+        this.getReviews(this.gameId);
       })
       .catch((err) => {
         console.log(err);
@@ -52,14 +50,15 @@ export class ReviewsService {
   }
 
   getReviews(gameId: any): any {
+    this.gameId = gameId;
     this.http
-      .get(`${environment.apiURL}/games/${gameId}/reviews`, {
+      .get(`${environment.apiURL}/reviews/${gameId}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       })
       .toPromise()
       .then()
       .then((res: any) => {
-        this.reviewsSubject.next(res.json().data);
+        this.reviewsSubject.next(res);
       })
       .catch((err) => {
         console.log(err);
@@ -69,7 +68,7 @@ export class ReviewsService {
 
   updateReview(body: any, gameId: any, reviewId: any): any {
     this.http
-      .put(`${environment.apiURL}/games/${gameId}/reviews/${reviewId}`, body)
+      .put(`${environment.apiURL}/reviews/${gameId}/${reviewId}`, body)
       .toPromise()
       .then((res: any) => {
         this.successSubject.next(res.message);
@@ -83,7 +82,7 @@ export class ReviewsService {
 
   deleteReview(gameId: any, reviewId: any): any {
     this.http
-      .delete(`${environment.apiURL}/games/${gameId}/reviews/${reviewId}`, {
+      .delete(`${environment.apiURL}/reviews/${gameId}/${reviewId}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       })
       .toPromise()

@@ -8,7 +8,7 @@ import validateBody from '../middlewares/validateBody.js'
 const reviewsRoute = express.Router()
 
 
-reviewsRoute.post('/', validateBody(createReviewValidator), async (req, res) => {
+reviewsRoute.post('/:gameId', validateBody(createReviewValidator), async (req, res) => {
     const {
         user_id,
         rating,
@@ -17,6 +17,7 @@ reviewsRoute.post('/', validateBody(createReviewValidator), async (req, res) => 
     const {
         gameId
     } = req.params
+    console.log(req.params)
     var mongoObjectId = mongoose.Types.ObjectId();
     const data = new Review({
         _id: mongoObjectId,
@@ -36,12 +37,13 @@ reviewsRoute.post('/', validateBody(createReviewValidator), async (req, res) => 
         })
     }
 })
-reviewsRoute.get('/', async (req, res) => {
+reviewsRoute.get('/:gameId', async (req, res) => {
     const {
         gameId
     } = req.params
+    console.log(gameId)
     try {
-        const data = await Review.findAll({
+        const data = await Review.find({
             game_id: gameId
         });
         if (data.length === 0) {
@@ -57,7 +59,7 @@ reviewsRoute.get('/', async (req, res) => {
         })
     }
 })
-reviewsRoute.put('/:reviewId', validateBody(createReviewValidator), async (req, res) => {
+reviewsRoute.put('/:gameId/:reviewId', validateBody(createReviewValidator), async (req, res) => {
     try {
         const {
             rating,
@@ -87,7 +89,7 @@ reviewsRoute.put('/:reviewId', validateBody(createReviewValidator), async (req, 
         })
     }
 })
-reviewsRoute.delete('/:reviewId', async (req, res) => {
+reviewsRoute.delete('/:gameId/:reviewId', async (req, res) => {
     Review.findOneAndRemove({
             _id: req.params.id,
             game_id: req.params.gameId

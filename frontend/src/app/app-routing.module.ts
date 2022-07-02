@@ -24,7 +24,11 @@ const routes: Routes = [
   },
   { path: 'edit', component: EditComponent, canActivate: [AuthService] },
   { path: 'create', component: CreateComponent },
-  { path: 'play/:gameName', component: PlayComponent },
+  {
+    path: 'play/:gameName',
+    component: PlayComponent,
+    data: { gameName: '', gameId: '' },
+  },
   { path: 'games', component: GamesTabComponent },
   { path: 'about', component: AboutPageComponent },
   { path: 'login', component: LogInComponent, canActivate: [NoAuthService] },
