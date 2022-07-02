@@ -1,0 +1,23 @@
+img {
+  width: 490px;
+  height: 250px;
+}
+
+
+.image {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  height: 250px;
+}
+
+.games {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.games::-webkit-scrollbar {
+  display: none;
+}

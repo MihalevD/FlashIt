@@ -1,4 +1,5 @@
 label,
-button {
+button,
+.label>p {
   font-family: sans-serif;
 }

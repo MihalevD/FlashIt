@@ -7,11 +7,11 @@ import { UserService } from 'src/app/user.service';
   styleUrls: ['./main-navbar.component.css'],
 })
 export class MainNavbarComponent implements OnInit {
-  isLogged = null;
+  user = { username: '', imageURL: '', role: '' };
   constructor(private userService: UserService) {
     this.userService.user.subscribe((user: any) => {
-      console.log(user);
-      this.isLogged = user;
+      this.user = user;
+      console.log(this.user);
     });
   }
 

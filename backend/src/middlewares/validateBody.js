@@ -5,6 +5,7 @@ export default (validator) => async (req, res, next) => {
     .keys(validator)
     .forEach((key) => {
       if (!validator[key](req.body[key])) {
+        console.log(key)
         error = true;
       }
     });

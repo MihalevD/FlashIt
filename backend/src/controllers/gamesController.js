@@ -15,13 +15,13 @@ gamesRoute.post('/', validateBody(createGameValidator), async (req, res) => {
         imageURL
     } = req.body;
     var mongoObjectId = mongoose.Types.ObjectId();
-    const data = new Game({
+    const game = new Game({
         _id: mongoObjectId,
         name: name,
         imageURL: imageURL,
     })
     try {
-        await data.save();
+        await game.save();
         res.status(200).json({
             message: 'Game has been posted'
         });
@@ -33,7 +33,7 @@ gamesRoute.post('/', validateBody(createGameValidator), async (req, res) => {
 })
 gamesRoute.get('/', async (req, res) => {
     try {
-        const data = await Game.findAll();
+        const data = await Game.find({});
         if (data.length === 0) {
             res.status(404).json({
                 message: 'Games not found'

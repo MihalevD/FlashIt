@@ -5,7 +5,9 @@
     class="flex justify-between lg:w-auto w-full lg:border-b-0 pl-6 pr-2 border-solid border-b-2 border-gray-300 pb-5 lg:pb-0"
   >
     <div class="flex items-center flex-shrink-0 text-gray-800 mr-16">
-      <span class="text-xl tracking-tight text-yellow-300 cursor-pointer" routerLink="/home"
+      <span
+        class="text-xl tracking-tight text-yellow-300 cursor-pointer"
+        routerLink="/home"
         >FlashIT</span
       >
     </div>
@@ -43,11 +45,18 @@
         CREATE
       </a>
       <a
+        *ngIf="user && user.role === 'ADMIN'"
+        class="block mt-4 lg:inline-block lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-blue-700 mr-2"
+        routerLink="/users"
+      >
+        USERS
+      </a>
+      <!-- <a
         class="block mt-4 lg:inline-block lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-blue-700 mr-2"
         routerLink="/about"
       >
         ABOUT
-      </a>
+      </a> -->
     </div>
     <!-- <div class="relative mx-auto text-gray-600 lg:block hidden">
       <input
@@ -76,7 +85,7 @@
         </svg>
       </button>
     </div> -->
-    <div class="flex" *ngIf="!isLogged">
+    <div class="flex" *ngIf="!user">
       <a
         routerLink="/signup"
         class="block text-2xl px-4 py-2 rounded text-white ml-2 hover:text-white mt-4 hover:bg-blue-700 lg:mt-0"
@@ -89,10 +98,31 @@
         >LOG IN</a
       >
     </div>
-    <div class="flex" *ngIf="isLogged">
+    <div class="flex items-center" *ngIf="user && user.username">
+      <div
+        routerLink="edit"
+        class="flex items-center hover:bg-blue-700 rounded-xl cursor-pointer mr-12"
+      >
+        <div *ngIf="user.imageURL !== undefined">
+          <img
+            [src]="user.imageURL"
+            alt="user"
+            class="w-12 h-12 rounded-full"
+          />
+        </div>
+        <div *ngIf="user.imageURL === undefined">
+          <img src="../../../assets/icon.png" alt="user" class="w-12 h-12" />
+        </div>
+        <p
+          *ngIf="user.username !== undefined"
+          class="text-2xl rounded ml-2 text-yellow-400 pr-2"
+        >
+          {{ user.username }}
+        </p>
+      </div>
       <a
         (click)="signOut()"
-        class="block text-2xl px-4 py-2 rounded text-white ml-2 hover:text-white mt-4 hover:bg-blue-700 lg:mt-0"
+        class="block cursor-pointer text-2xl px-4 py-2 rounded text-white ml-2 hover:text-white mt-4 hover:bg-blue-700 lg:mt-0"
         >SIGN OUT</a
       >
     </div>

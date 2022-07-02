@@ -40,7 +40,6 @@ export class GamesServices {
       );
       return;
     }
-    console.log('else');
     this.http
       .post(
         `${environment.apiURL}/games`,
@@ -67,7 +66,8 @@ export class GamesServices {
       .toPromise()
       .then()
       .then((res: any) => {
-        this.gamesSubject.next(res.json().data);
+        console.log(res);
+        this.gamesSubject.next(res);
       })
       .catch((err) => {
         console.log(err);

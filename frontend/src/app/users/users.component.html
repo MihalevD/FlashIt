@@ -1,0 +1,24 @@
+<div class="w-2/3 h-full flex items-center justify-center mx-auto">
+  <div>
+    <div
+      *ngFor="let user of applicants; let indexU = index"
+      class="w-96 h-20 mb-10 bg-white rounded-2xl flex items-center justify-between"
+    >
+      <p class="text-2xl ml-2">{{ user.username }}</p>
+      <div>
+        <button
+          (click)="approve(user._id, indexU)"
+          class="text-md bg-green-500 p-2 rounded-3xl hover:opacity-70 mr-2"
+        >
+          APPROVE
+        </button>
+        <button
+          (click)="disApprove(user._id, indexU)"
+          class="text-md bg-red-500 p-2 rounded-3xl hover:opacity-70 mr-2"
+        >
+          DISAPPROVE
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

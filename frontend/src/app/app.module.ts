@@ -17,6 +17,8 @@ import { CarouselComponent } from './carousel/carousel.component';
 import { SafePipe } from './play/safe.pipe';
 import { PlayModule } from './play/play.module';
 import { CreateComponent } from './create/create.component';
+import { EditComponent } from './edit/edit.component';
+import { UsersComponent } from './users/users.component';
 
 @NgModule({
   declarations: [
@@ -27,10 +29,11 @@ import { CreateComponent } from './create/create.component';
     LandingComponent,
     CarouselComponent,
     CreateComponent,
+    EditComponent,
+    UsersComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     MainNavbarModule,
     RegistrationModule,
     LoginModule,
@@ -38,6 +41,7 @@ import { CreateComponent } from './create/create.component';
     SvgIconModule,
     HttpClientModule,
     PlayModule,
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

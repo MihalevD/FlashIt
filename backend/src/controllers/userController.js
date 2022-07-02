@@ -100,7 +100,8 @@ usersRoute.put('/users/:userId', authMiddleware, async (req, res) => {
         createdAt: user.createdAt,
         email: user.email,
         role: user.role,
-        applied: user.applied
+        applied: user.applied,
+        imageURL: user.imageURl
       });
       res.status(200).json({
         token
@@ -143,7 +144,8 @@ usersRoute.post('/login', async (req, res) => {
         createdAt: user.createdAt,
         email: user.email,
         role: user.role,
-        applied: user.applied
+        applied: user.applied,
+        imageURL: user.imageURL
       });
       res.status(200).json({
         token
@@ -168,5 +170,27 @@ usersRoute.delete('/logout', async (req, res) => {
     message: 'You have been logged out!'
   });
 });
+
+// GET ALL APPLICANTS
+
+usersRoute.get('/applicants', async (req, res) => {
+  try {
+    const data = await User.find({
+      applied: true
+    });
+    if (data.length === 0) {
+      res.status(404).json({
+        message: 'Users not found'
+      })
+    } else {
+      res.json(data)
+    }
+  } catch (error) {
+    res.status(500).json({
+      message: error.message
+    })
+  }
+})
+
 
 export default usersRoute;

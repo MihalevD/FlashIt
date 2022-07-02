@@ -1,0 +1,70 @@
+<div class="w-full h-full flex justify-center items-center">
+  <div class="w-full max-w-md -mt-60">
+    <form class="bg-white shadow-md rounded p-10 mb-4">
+      <div class="mb-4 label">
+        <label
+          class="block text-gray-700 text-sm font-bold mb-2"
+          for="username"
+        >
+          Username
+        </label>
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="username"
+          type="text"
+          [placeholder]="username"
+          (keyup)="onKey($event, 'username')"
+        />
+        <p *ngIf="!valid.username" class="text-red-500 text-xs italic">
+          Username can consist of letters and numbers only and the minimum
+          length is 5!
+        </p>
+      </div>
+      <div class="mb-4 label">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
+          Email
+        </label>
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="email"
+          type="email"
+          [placeholder]="email"
+          (keyup)="onKey($event, 'email')"
+        />
+        <p *ngIf="!valid.email" class="text-red-500 text-xs italic">
+          Your email is not correct!
+        </p>
+      </div>
+      <div class="mb-4">
+        <label
+          class="block text-gray-700 text-sm font-bold mb-2"
+          for="password"
+        >
+          Image URL
+        </label>
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="imageURL"
+          type="imageURL"
+          [placeholder]="imageURL === undefined ? '' : imageURL"
+          (keyup)="onKey($event, 'imageURL')"
+        />
+        <img
+          *ngIf="imageURL !== undefined"
+          [src]="imageURL"
+          alt=""
+          class="w-16 h-16 mt-4 rounded-full object-fill"
+        />
+      </div>
+      <div class="flex items-center justify-between">
+        <button
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          type="button"
+          (click)="onSubmit()"
+        >
+          Update
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

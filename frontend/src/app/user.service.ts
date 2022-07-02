@@ -20,6 +20,9 @@ export class UserService {
   userSubject: any = new BehaviorSubject<any>(null);
   user: any = this.userSubject.asObservable();
 
+  applicantsSubject: any = new BehaviorSubject<any>(null);
+  applicants: any = this.applicantsSubject.asObservable();
+
   userForService: any;
 
   constructor(private http: HttpClient, private router: Router) {
@@ -84,6 +87,21 @@ export class UserService {
       });
   }
 
+  changeUser(body: any, userId: any): void {
+    this.http
+      .put(`${environment.apiURL}/users/${userId}`, body, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+      })
+      .toPromise()
+      .then((res: any) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+        this.errorSubject.next(err.error.error);
+      });
+  }
+
   signOut() {
     this.http
       .delete(`${environment.apiURL}/logout`, {
@@ -93,6 +111,7 @@ export class UserService {
       .then((res: any) => {
         localStorage.removeItem('token');
         this.userSubject.next(null);
+        this.router.navigateByUrl('home');
       });
   }
 
@@ -104,6 +123,22 @@ export class UserService {
     } else {
       return false;
     }
+  }
+
+  getAllApplicants(): any {
+    this.http
+      .get(`${environment.apiURL}/applicants`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+      })
+      .toPromise()
+      .then((res: any) => {
+        console.log(res);
+        this.applicantsSubject.next(res);
+      })
+      .catch((err) => {
+        console.log(err);
+        this.errorSubject.next(err.error.error);
+      });
   }
 
   decodeToken = (token: any) => {

@@ -1,1 +1,30 @@
-<p>games-tab works!</p>
+<div *ngIf="!user" class="text-4xl text-white text-center mt-20">
+  <p>TO SEE MORE GAMES LOG IN</p>
+</div>
+<div
+  class="flex flex-wrap justify-evenly px-16 py-16 overflow-y-auto h-full games"
+>
+  <div
+    *ngFor="let game of games; let indexOfelement = index"
+    class="relative mb-10"
+  >
+    <div
+      class="cursor-pointer relative"
+      (mouseenter)="mouseEnter(indexOfelement)"
+      (mouseleave)="mouseLeave(indexOfelement)"
+    >
+      <img [src]="game.imageURL" class="rounded-xl" />
+      <div
+        *ngIf="hovered === indexOfelement"
+        class="image absolute top-0 left-0 rounded-xl"
+      ></div>
+      <button
+        *ngIf="hovered === indexOfelement"
+        [routerLink]="['/play', game.name]"
+        class="text-xl p-4 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-yellow-300 rounded-xl"
+      >
+        PLAY
+      </button>
+    </div>
+  </div>
+</div>
